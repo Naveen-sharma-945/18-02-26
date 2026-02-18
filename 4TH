@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+class Calculator {
+public:
+    // Add two integers
+    int add(int a, int b) {
+        return a + b;
+    }
+
+    // Add two doubles
+    double add(double a, double b) {
+        return a + b;
+    }
+
+    // Add three integers
+    int add(int a, int b, int c) {
+        return a + b + c;
+    }
+};
+
+int main() {
+    Calculator calc;
+
+    int int1, int2;
+    int intA,intB,intC;
+    double double1, double2;
+
+    // Input for two integers
+    cout << "Enter first integer: ";
+    cin >> int1;
+    cout << "Enter second integer: ";
+    cin >> int2;
+
+    // Input for two doubles
+    cout << "Enter first decimal number: ";
+    cin >> double1;
+    cout << "Enter second decimal number: ";
+    cin >> double2;
+
+    // Input for three integers
+    cout << "Enter three integers: ";
+    cin >> intA >> intB >> intC;
+
+    cout << "\nResults:" << endl;
+    cout << "Sum of two integers: " << calc.add(int1, int2) << endl;
+    cout << "Sum of two doubles: " << calc.add(double1, double2) << endl;
+    cout << "Sum of three integers: " << calc.add(intA, intB, intC) << endl;
+
+    return 0;
+}
+
+
+OUTPUT
+
+Enter first integer: 5
+Enter second integer: 4
+Enter first decimal number: 1.1
+Enter second decimal number: 8.6
+Enter three integers: 8 4 5
+
+Results:
+Sum of two integers: 9
+Sum of two doubles: 9.7
+Sum of three integers: 17
