@@ -1,0 +1,208 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Node structure for the linked list
+struct BookNode {
+    int id;
+    string title;
+    string author;
+    bool issued;
+    BookNode* next;
+
+    BookNode(int bookId, const string& bookTitle, const string& bookAuthor) {
+        id = bookId;
+        title = bookTitle;
+        author = bookAuthor;
+        issued = false;
+        next = nullptr;
+    }
+};
+
+// Library class
+class Library {
+private:
+    BookNode* head;
+
+public:
+    Library() { head = nullptr; }
+
+    ~Library() {
+        BookNode* current = head;
+        while (current != nullptr) {
+            BookNode* temp = current;
+            current = current->next;
+            delete temp;
+        }
+    }
+
+    void addBook(int id, const string& title, const string& author) {
+        BookNode* newBook = new BookNode(id, title, author);
+        newBook->next = head;
+        head = newBook;
+        cout << "Book added successfully!\n";
+    }
+
+    void issueBook(int id) {
+        BookNode* current = head;
+        while (current != nullptr) {
+            if (current->id == id) {
+                if (!current->issued) {
+                    current->issued = true;
+                    cout << "Book issued: " << current->title << endl;
+                } else {
+                    cout << "Book is already issued.\n";
+                }
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Book ID not found.\n";
+    }
+
+    void returnBook(int id) {
+        BookNode* current = head;
+        while (current != nullptr) {
+            if (current->id == id) {
+                if (current->issued) {
+                    current->issued = false;
+                    cout << "Book returned: " << current->title << endl;
+                } else {
+                    cout << "Book was not issued.\n";
+                }
+                return;
+            }
+            current = current->next;
+        }
+        cout << "Book ID not found.\n";
+    }
+
+    void searchBook(const string& title) {
+        BookNode* current = head;
+        bool found = false;
+        while (current != nullptr) {
+            if (current->title == title) {
+                cout << "Book Found - ID: " << current->id
+                     << ", Author: " << current->author
+                     << ", Issued: " << (current->issued ? "Yes" : "No") << endl;
+                found = true;
+            }
+            current = current->next;
+        }
+        if (!found) {
+            cout << "Book not found.\n";
+        }
+    }
+
+    void displayAll() {
+        BookNode* current = head;
+        if (!current) {
+            cout << "Library is empty.\n";
+            return;
+        }
+        cout << "Books in Library:\n";
+        while (current != nullptr) {
+            cout << "ID: " << current->id
+                 << ", Title: " << current->title
+                 << ", Author: " << current->author
+                 << ", Issued: " << (current->issued ? "Yes" : "No") << endl;
+            current = current->next;
+        }
+    }
+};
+
+int main() {
+    Library lib;
+    int choice;
+
+    do {
+        cout << "\n===== Library Menu =====\n";
+        cout << "1. Add Book\n";
+        cout << "2. Issue Book\n";
+        cout << "3. Return Book\n";
+        cout << "4. Search Book\n";
+        cout << "5. Display All Books\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();  // clear newline from input buffer
+
+        if (choice == 1) {
+            int id;
+            string title, author;
+            cout << "Enter Book ID: ";
+            cin >> id;
+            cin.ignore();
+            cout << "Enter Book Title: ";
+            getline(cin, title);
+            cout << "Enter Book Author: ";
+            getline(cin, author);
+            lib.addBook(id, title, author);
+        } else if (choice == 2) {
+            int id;
+            cout << "Enter Book ID to issue: ";
+            cin >> id;
+            lib.issueBook(id);
+        } else if (choice == 3) {
+            int id;
+            cout << "Enter Book ID to return: ";
+            cin >> id;
+            lib.returnBook(id);
+        } else if (choice == 4) {
+            string title;
+            cout << "Enter Book Title to search: ";
+            cin.ignore();
+            getline(cin, title);
+            lib.searchBook(title);
+        } else if (choice == 5) {
+            lib.displayAll();
+        } else if (choice == 6) {
+            cout << "Exiting program.\n";
+        } else {
+            cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 6);
+
+    return 0;
+}
+
+
+output
+
+
+
+===== Library Menu =====
+1. Add Book
+2. Issue Book
+3. Return Book
+4. Search Book
+5. Display All Books
+6. Exit
+Enter your choice: 1
+Enter Book ID: 5645
+Enter Book Title: maorrris mano
+Enter Book Author: anjali
+Book added successfully!
+
+===== Library Menu =====
+1. Add Book
+2. Issue Book
+3. Return Book
+4. Search Book
+5. Display All Books
+6. Exit
+Enter your choice: 5
+Books in Library:
+ID: 5645, Title: maorrris mano, Author: anjali, Issued: No
+
+===== Library Menu =====
+1. Add Book
+2. Issue Book
+3. Return Book
+4. Search Book
+5. Display All Books
+6. Exit
+Enter your choice: 
+
