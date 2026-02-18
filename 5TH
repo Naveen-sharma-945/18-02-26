@@ -1,0 +1,163 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Structure
+struct Subject {
+    string name;
+    int marks;
+};
+
+class Student {
+private:
+    int roll;
+    string name;
+    Subject* subjects;
+    int n;
+
+public:
+    // Parameterized Constructor
+    Student(int numSubjects) {
+        n = numSubjects;
+        subjects = new Subject[n];
+    }
+
+    // Destructor
+    ~Student() {
+        delete[] subjects;
+    }
+
+    void input() {
+        cout << "\nEnter Roll Number: ";
+        cin >> roll;
+        cin.ignore();
+
+        cout << "Enter Student Name: ";
+        getline(cin, name);
+
+        for (int i = 0; i < n; i++) {
+            cout << "\nEnter Subject " << i + 1 << " Name: ";
+            getline(cin, subjects[i].name);
+
+            cout << "Enter Marks for " << subjects[i].name << ": ";
+            cin >> subjects[i].marks;
+            cin.ignore();
+        }
+    }
+
+    int total() const {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += subjects[i].marks;
+        }
+        return sum;
+    }
+
+    char grade() const {
+        double avg = (double)total() / n;
+
+        if (avg >= 90) return 'A';
+        else if (avg >= 75) return 'B';
+        else if (avg >= 60) return 'C';
+        else if (avg >= 40) return 'D';
+        else return 'F';
+    }
+
+    void display() const {
+        cout << "\nRoll Number: " << roll;
+        cout << "\nName: " << name;
+        cout << "\nSubjects:";
+
+        for (int i = 0; i < n; i++) {
+            cout << "\n  " << subjects[i].name << " : " << subjects[i].marks;
+        }
+
+        cout << "\nTotal Marks: " << total();
+        cout << "\nGrade: " << grade() << endl;
+    }
+};
+
+int main() {
+    int N, numSubjects;
+
+    cout << "Enter number of students: ";
+    cin >> N;
+
+    cout << "Enter number of subjects per student: ";
+    cin >> numSubjects;
+
+    // Create pointer to object array properly
+    Student** students = new Student*[N];
+
+    for (int i = 0; i < N; i++) {
+        students[i] = new Student(numSubjects);
+    }
+
+    // Input
+    for (int i = 0; i < N; i++) {
+        cout << "\n--- Enter Details for Student " << i + 1 << " ---";
+        students[i]->input();
+    }
+
+    // Find topper
+    int topperIndex = 0;
+    int highestTotal = students[0]->total();
+
+    for (int i = 1; i < N; i++) {
+        if (students[i]->total() > highestTotal) {
+            highestTotal = students[i]->total();
+            topperIndex = i;
+        }
+    }
+
+    // Display all
+    cout << "\n\n===== STUDENT DETAILS =====\n";
+    for (int i = 0; i < N; i++) {
+        students[i]->display();
+    }
+
+    // Display topper
+    cout << "\n\n===== TOPPER =====\n";
+    students[topperIndex]->display();
+
+    // Free memory properly
+    for (int i = 0; i < N; i++) {
+        delete students[i];
+    }
+    delete[] students;
+
+    return 0;
+}
+
+
+OUTPUT
+
+Enter number of students: 1
+Enter number of subjects per student: 1
+
+--- Enter Details for Student 1 ---
+Enter Roll Number: 1
+Enter Student Name: nvin
+
+Enter Subject 1 Name: phy
+Enter Marks for phy: 95
+
+
+===== STUDENT DETAILS =====
+
+Roll Number: 1
+Name: nvin
+Subjects:
+  phy : 95
+Total Marks: 95
+Grade: A
+
+
+===== TOPPER =====
+
+Roll Number: 1
+Name: nvin
+Subjects:
+  phy : 95
+Total Marks: 95
+Grade: A
