@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+class Employee {
+private:
+    string name;
+    double salary;
+
+public:
+    // Setter for name
+    void setName(string empName) {
+        name = empName;
+    }
+
+    // Getter for name
+    string getName() {
+        return name;
+    }
+
+    // Setter for salary with validation
+    void setSalary(double empSalary) {
+        if (empSalary < 0) {
+            cout << "Salary cannot be negative! Setting salary to 0.\n";
+            salary = 0;
+        } else {
+            salary = empSalary;
+        }
+    }
+
+    // Getter for salary
+    double getSalary() {
+        return salary;
+    }
+
+    // Display function
+    void display() {
+        cout << "\nEmployee Details:" << endl;
+        cout << "Name: " << name << endl;
+        cout << "Salary: " << salary << endl;
+    }
+};
+
+int main() {
+    Employee emp;
+    string name;
+    double salary;
+
+    cout << "Enter Employee Name: ";
+    cin >> name;
+
+    cout << "Enter Employee Salary: ";
+    cin >> salary;
+
+    emp.setName(name);
+    emp.setSalary(salary);
+
+    emp.display();
+
+    return 0;
+}
+
+
+OUTPUT
+
+Enter Employee Name: Anjali
+Enter Employee Salary: 
+
+
+
+
+
+90000
+
+Employee Details:
+Name: Anjali
+Salary: 90000
