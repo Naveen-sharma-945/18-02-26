@@ -1,0 +1,99 @@
+#include <iostream>
+using namespace std;
+
+class BankAccount {
+private:
+    int accountNumber;
+    double balance;
+
+public:
+    // Constructor
+    BankAccount(int accNo, double bal) {
+        accountNumber = accNo;
+        balance = bal;
+        cout << "\nConstructor called for Account No: "
+             << accountNumber << endl;
+    }
+
+    // Destructor
+    ~BankAccount() {
+        cout << "Destructor called for Account No: "
+             << accountNumber << endl;
+    }
+
+    // Display function
+    void display() {
+        cout << "\nAccount Number: " << accountNumber << endl;
+        cout << "Balance: " << balance << endl;
+    }
+};
+
+// Function to create objects with user input
+void createAccounts() {
+    int accNo1, accNo2;
+    double bal1, bal2;
+
+    cout << "\nEnter details for Account 1\n";
+    cout << "Enter Account Number: ";
+    cin >> accNo1;
+    cout << "Enter Balance: ";
+    cin >> bal1;
+
+    cout << "\nEnter details for Account 2\n";
+    cout << "Enter Account Number: ";
+    cin >> accNo2;
+    cout << "Enter Balance: ";
+    cin >> bal2;
+
+    BankAccount acc1(accNo1, bal1);
+    BankAccount acc2(accNo2, bal2);
+
+    cout << "\nInside createAccounts() function\n";
+    acc1.display();
+    acc2.display();
+
+    cout << "\nExiting createAccounts() function...\n";
+}
+
+int main() {
+    cout << "Entering main()\n";
+
+    createAccounts();
+
+    cout << "\nBack in main()\n";
+    cout << "Exiting main()\n";
+
+    return 0;
+}
+
+
+oUTPUT
+
+Entering main()
+
+Enter details for Account 1
+Enter Account Number: 120215
+Enter Balance: 1200
+
+Enter details for Account 2
+Enter Account Number: 54465
+Enter Balance: 1300
+
+Constructor called for Account No: 120215
+
+Constructor called for Account No: 54465
+
+Inside createAccounts() function
+
+Account Number: 120215
+Balance: 1200
+
+Account Number: 54465
+Balance: 1300
+
+Exiting createAccounts() function...
+Destructor called for Account No: 54465
+Destructor called for Account No: 120215
+
+Back in main()
+Exiting main()
