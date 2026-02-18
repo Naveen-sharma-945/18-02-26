@@ -1,0 +1,160 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Node Structure
+struct Node {
+    int id;
+    string name;
+    int severity;
+    Node* next;
+};
+
+class PatientQueue {
+private:
+    Node* front;
+
+public:
+    // Constructor
+    PatientQueue() {
+        front = NULL;
+    }
+
+    // Destructor to free memory
+    ~PatientQueue() {
+        while (front != NULL) {
+            dequeue();
+        }
+    }
+
+    // Enqueue based on severity (higher severity first)
+    void enqueue(int id, string name, int severity) {
+        Node* newNode = new Node;
+        newNode->id = id;
+        newNode->name = name;
+        newNode->severity = severity;
+        newNode->next = NULL;
+
+        // If queue empty OR new node has highest priority
+        if (front == NULL || severity > front->severity) {
+            newNode->next = front;
+            front = newNode;
+        }
+        else {
+            Node* temp = front;
+
+            while (temp->next != NULL && temp->next->severity >= severity) {
+                temp = temp->next;
+            }
+
+            newNode->next = temp->next;
+            temp->next = newNode;
+        }
+
+        cout << "Patient added successfully.\n";
+    }
+
+    // Dequeue (remove highest severity patient)
+    void dequeue() {
+        if (front == NULL) {
+            cout << "Queue is empty!\n";
+            return;
+        }
+
+        Node* temp = front;
+        cout << "Dequeued Patient: "
+             << temp->name << " (Severity: "
+             << temp->severity << ")\n";
+
+        front = front->next;
+        delete temp;
+    }
+
+    // Display queue
+    void display() {
+        if (front == NULL) {
+            cout << "Queue is empty!\n";
+            return;
+        }
+
+        Node* temp = front;
+        cout << "\n--- Patient Queue ---\n";
+        while (temp != NULL) {
+            cout << "ID: " << temp->id
+                 << ", Name: " << temp->name
+                 << ", Severity: " << temp->severity << endl;
+            temp = temp->next;
+        }
+    }
+};
+
+int main() {
+    PatientQueue pq;
+    int choice;
+
+    do {
+        cout << "\n1. Enqueue Patient";
+        cout << "\n2. Dequeue Patient";
+        cout << "\n3. Display Queue";
+        cout << "\n4. Exit";
+        cout << "\nEnter choice: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            int id, severity;
+            string name;
+
+            cout << "Enter Patient ID: ";
+            cin >> id;
+            cin.ignore();
+
+            cout << "Enter Patient Name: ";
+            getline(cin, name);
+
+            cout << "Enter Severity (Higher number = more critical): ";
+            cin >> severity;
+
+            pq.enqueue(id, name, severity);
+        }
+        else if (choice == 2) {
+            pq.dequeue();
+        }
+        else if (choice == 3) {
+            pq.display();
+        }
+
+    } while (choice != 4);
+
+    cout << "Program Ended.\n";
+    return 0;
+}
+
+
+
+Output
+
+
+
+1. Enqueue Patient
+2. Dequeue Patient
+3. Display Queue
+4. Exit
+Enter choice: 1
+Enter Patient ID: 524
+Enter Patient Name: anjali
+Enter Severity (Higher number = more critical): 99
+Patient added successfully.
+
+1. Enqueue Patient
+2. Dequeue Patient
+3. Display Queue
+4. Exit
+Enter choice: 3
+
+--- Patient Queue ---
+ID: 524, Name: anjali, Severity: 99
+
+1. Enqueue Patient
+2. Dequeue Patient
+3. Display Queue
+4. Exit
